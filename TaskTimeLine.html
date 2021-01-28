@@ -1,0 +1,95 @@
+<html>
+<head>
+   <script src="https://cdn.bootcdn.net/ajax/libs/antv-g2/4.1.7/g2.min.js"></script>
+</head>
+<body>
+<textarea id="datainput" style="width:100%;height:40px;" >
+  [{'task': '36624DoScoring', 'startTime': 0.0, 'endTime': 1.0897669792175293, 'status': 1}, {'task': '图片前处理', 'startTime': 0.14742064476013184, 'endTime': 0.17670989036560059, 'status': 1}, {'task': 'AI图片识别', 'startTime': 0.18647050857543945, 'endTime': 0.395397424697876, 'status': 1}, {'task': 'AI图片后处理', 'startTime': 0.395397424697876, 'endTime': 1.0175082683563232, 'status': 1}, {'task': '上传到OSS', 'startTime': 0.3963758945465088, 'endTime': 0.463270902633667, 'status': 1}, {'task': '单通道求新投入的垃圾', 'startTime': 0.4642479419708252, 'endTime': 0.5428669452667236, 'status': 0}, {'task': '过滤小面积物品', 'startTime': 0.5428669452667236, 'endTime': 0.5575101375579834, 'status': 1}, {'task': '添加色标', 'startTime': 0.5780117511749268, 'endTime': 0.6053481101989746, 'status': 1}, {'task': '上传到OSS(2)', 'startTime': 0.6160893440246582, 'endTime': 0.8016355037689209, 'status': 1}, {'task': '过滤小面积物品(2)', 'startTime': 0.8016355037689209, 'endTime': 0.8162789344787598, 'status': 1}, {'task': '添加色标(2)', 'startTime': 0.8309271335601807, 'endTime': 0.8421776294708252, 'status': 1}, {'task': '上传到OSS(3)', 'startTime': 0.8519401550292969, 'endTime': 1.0175082683563232, 'status': 1}, {'task': '识别后打分', 'startTime': 1.0175082683563232, 'endTime': 1.0438659191131592, 'status': 1}, {'task': 'Send2WeiXin2', 'startTime': 1.06046724319458, 'endTime': 1.06046724319458, 'status': 1}, {'task': 'Send2DaBaShou', 'startTime': 1.06046724319458, 'endTime': 1.06046724319458, 'status': 1}]
+</textarea>
+<button onclick="ShowTaskLine()">可视化数据</button>
+
+<div id="timeline"></div>
+</body>
+</html>
+
+
+
+<script>
+
+// import { Chart } from '@antv/g2'; 
+
+// const data = [
+//   { task: 'task0', startTime: '2018-04-18 01:17:12', endTime: '2018-04-18 01:19:10', status: 0 },
+//   { task: 'task1', startTime: '2018-04-18 01:18:15', endTime: '2018-04-18 01:19:20', status: 0 },
+//   { task: 'task2', startTime: '2018-04-18 02:11:32', endTime: '2018-04-18 02:18:50', status: 0 },
+//   { task: 'task3', startTime: '2018-04-18 02:18:50', endTime: '2018-04-18 03:16:38', status: 0 },
+//   { task: 'task4', startTime: '2018-04-18 02:19:48', endTime: '2018-04-18 02:21:57', status: 0 },
+//   { task: 'task5', startTime: '2018-04-18 03:16:38', endTime: '2018-04-18 03:19:38', status: 1 },
+//   { task: 'task6', startTime: '2018-04-18 03:19:38', endTime: '2018-04-18 03:27:49', status: 0 },
+//   { task: 'task7', startTime: '2018-04-18 07:29:37', endTime: '2018-04-18 07:33:01', status: 0 },
+//   { task: 'task8', startTime: '2018-04-18 03:27:49', endTime: '2018-04-18 04:26:05', status: 0 },
+//   { task: 'task9', startTime: '2018-04-18 04:26:05', endTime: '2018-04-18 06:06:36', status: 0 },
+//   { task: 'task10', startTime: '2018-04-18 06:06:36', endTime: '2018-04-18 06:15:15', status: 0 },
+//   { task: 'task11', startTime: '2018-04-18 03:27:49', endTime: '2018-04-18 03:34:50', status: 0 },
+// ];
+// const data = [{'task': '36624DoScoring', 'startTime': 0.0, 'endTime': 1.0897669792175293, 'status': 1}, {'task': '图片前处理', 'startTime': 0.14742064476013184, 'endTime': 0.17670989036560059, 'status': 1}, {'task': 'AI图片识别', 'startTime': 0.18647050857543945, 'endTime': 0.395397424697876, 'status': 1}, {'task': 'AI图片后处理', 'startTime': 0.395397424697876, 'endTime': 1.0175082683563232, 'status': 1}, {'task': '上传到OSS', 'startTime': 0.3963758945465088, 'endTime': 0.463270902633667, 'status': 1}, {'task': '单通道求新投入的垃圾', 'startTime': 0.4642479419708252, 'endTime': 0.5428669452667236, 'status': 0}, {'task': '过滤小面积物品', 'startTime': 0.5428669452667236, 'endTime': 0.5575101375579834, 'status': 1}, {'task': '添加色标', 'startTime': 0.5780117511749268, 'endTime': 0.6053481101989746, 'status': 1}, {'task': '上传到OSS(2)', 'startTime': 0.6160893440246582, 'endTime': 0.8016355037689209, 'status': 1}, {'task': '过滤小面积物品(2)', 'startTime': 0.8016355037689209, 'endTime': 0.8162789344787598, 'status': 1}, {'task': '添加色标(2)', 'startTime': 0.8309271335601807, 'endTime': 0.8421776294708252, 'status': 1}, {'task': '上传到OSS(3)', 'startTime': 0.8519401550292969, 'endTime': 1.0175082683563232, 'status': 1}, {'task': '识别后打分', 'startTime': 1.0175082683563232, 'endTime': 1.0438659191131592, 'status': 1}, {'task': 'Send2WeiXin2', 'startTime': 1.06046724319458, 'endTime': 1.06046724319458, 'status': 1}, {'task': 'Send2DaBaShou', 'startTime': 1.06046724319458, 'endTime': 1.06046724319458, 'status': 1}]
+
+
+function ShowTaskLine(){
+    var data = document.getElementById("datainput").value;
+    data = eval(data)
+
+    const values = ['运行失败','运行成功']; 
+    maxtime = 0
+    data.forEach((obj) => {
+      obj.startTime = obj.startTime.toFixed(4)*1
+      obj.endTime =  obj.endTime.toFixed(4)*1
+      obj.range = [obj.startTime, obj.endTime];
+      obj.status = values[obj.status];
+      if(obj.endTime > maxtime){
+        maxtime = obj.endTime;
+      }
+    });
+
+    const chart = new G2.Chart({
+      container: 'timeline',
+      autoFit: true,
+      height: document.body.clientHeight - 100,
+    });
+
+    chart.data(data);
+
+    chart.coordinate().transpose().scale(1, -1);
+
+    chart.scale('time', {
+      type: 'time',
+      nice: true,
+    });
+
+    // chart.scale('time', {
+    //   nice: false,
+    //   max: maxtime * 1.5,
+    //   min: 0
+    // });
+
+    chart.tooltip({
+      showMarkers: false,
+    });
+    chart.interaction('element-active');
+    chart
+      .interval()
+      .position('task*range')
+      .color('status', ['#2FC25B','#F04864'])
+      .animate({
+        appear: {
+          animation: 'scale-in-x',
+        },
+
+      });
+
+    chart.render();
+}
+
+
+
+</script>
